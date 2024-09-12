@@ -11,7 +11,8 @@ import { CardComponent } from '../../ui/card/card.component';
     <app-card
       [list]="teachers"
       [type]="cardType"
-      customClass="bg-light-red"></app-card>
+      customClass="bg-light-red"
+      (deleteClicked)="onDeleteClicked($event)"></app-card>
   `,
   styles: [
     `
@@ -36,5 +37,9 @@ export class TeacherCardComponent implements OnInit {
     this.http.fetchTeachers$.subscribe((t) => this.store.addAll(t));
 
     this.store.teachers$.subscribe((t) => (this.teachers = t));
+  }
+
+  onDeleteClicked(id: number) {
+    this.store.deleteOne(id);
   }
 }

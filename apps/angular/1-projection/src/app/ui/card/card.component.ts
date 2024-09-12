@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { randStudent, randTeacher } from '../../data-access/fake-http.service';
 import { StudentStore } from '../../data-access/student.store';
 import { TeacherStore } from '../../data-access/teacher.store';
@@ -45,6 +45,7 @@ export class CardComponent {
   @Input() type!: CardType;
   @Input() customClass = '';
 
+  @Output() deleteClicked = new EventEmitter<number>();
   CardType = CardType;
 
   constructor(
@@ -61,10 +62,6 @@ export class CardComponent {
   }
 
   onDeleteClicked(id: number) {
-    if (this.type === CardType.TEACHER) {
-      this.teacherStore.deleteOne(id);
-    } else if (this.type === CardType.STUDENT) {
-      this.studentStore.deleteOne(id);
-    }
+    this.deleteClicked.emit(id);
   }
 }
