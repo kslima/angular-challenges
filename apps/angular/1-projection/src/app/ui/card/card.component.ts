@@ -26,7 +26,8 @@ import { ListItemComponent } from '../list-item/list-item.component';
           *ngFor="let item of list"
           [name]="item.firstName"
           [id]="item.id"
-          [type]="type"></app-list-item>
+          [type]="type"
+          (deleteClicked)="onDeleteClicked($event)"></app-list-item>
       </section>
 
       <button
@@ -56,6 +57,14 @@ export class CardComponent {
       this.teacherStore.addOne(randTeacher());
     } else if (this.type === CardType.STUDENT) {
       this.studentStore.addOne(randStudent());
+    }
+  }
+
+  onDeleteClicked(id: number) {
+    if (this.type === CardType.TEACHER) {
+      this.teacherStore.deleteOne(id);
+    } else if (this.type === CardType.STUDENT) {
+      this.studentStore.deleteOne(id);
     }
   }
 }
